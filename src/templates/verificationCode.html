@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Código de Verificación</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+            width: 90%;
+            max-width: 400px;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .code {
+            font-size: 24px;
+            font-weight: bold;
+            color: #4CAF50; /* Color verde para el código */
+            margin: 20px 0;
+        }
+
+        .message {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        footer {
+            font-size: 12px;
+            color: #999;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Código de Verificación</h1>
+        <p class="message">Hemos detectado un inicio de sesión, por favor ingresa el siguiente código de verificación:</p>
+        <div class="code">{{verificationCode}}</div> <!-- Este será el código de verificación -->
+        <footer>
+            <p>&copy; 2024 Tu Empresa. Todos los derechos reservados.</p>
+        </footer>
+    </div>
+</body>
+</html>
