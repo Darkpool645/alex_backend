@@ -1,5 +1,8 @@
 const { v4: uuidv4, stringify: uuidStringify } = require("uuid");
 const db = require("../config/db");
+const path = require("path");
+const fs = require("fs").promises;
+const { processFile } = require("../utils/processFiles");
 
 // Convertir UUID a formato binario
 const uuidToBinary = (uuid) => {
@@ -225,5 +228,41 @@ exports.getTeachersList = async (req, res) => {
     return res.status(500).json({
       error: "Error al obtener la lista de docentes. Inténtalo más tarde",
     });
+  }
+};
+
+exports.uploadFile = async (req, res) => {
+  console.log("Verificando el archivo subido...");
+  console.log("Archivo recibido:", req.file);
+
+  if (!req.file) {
+    console.error("No se subió ningún archivo");
+    return res.status(400).json({ message: "No se subió ningún archivo" });
+  }
+
+  // Ruta del archivo subido
+  const filePath = path.join(__dirname, "../uploads", req.file.filename);
+  console.log("Ruta del archivo: ", filePath);
+
+  try {
+    // Procesar el archivo para generar el JSON
+    const questions = await processFile(filePath);
+    console.log("Archivo procesado con éxito:", questions);
+
+    // Eliminar el archivo después de procesarlo
+    await fs.unlink(filePath);
+    console.log("Archivo temporal eliminado.");
+
+    // Responder con el JSON generado
+    res.status(200).json({
+      success: true,
+      message: "Archivo procesado exitosamente",
+      questions,
+    });
+  } catch (error) {
+    console.error("Error procesando el archivo:", error);
+    res
+      .status(500)
+      .json({ message: error.message || "Error procesando el archivo" });
   }
 };
